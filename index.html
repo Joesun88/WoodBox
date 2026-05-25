@@ -4,278 +4,472 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>木質長方盒</title>
+<title>Joesun Violin Viewer</title>
 
 <script type="module"
-  src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js">
+src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js">
 </script>
 
 <style>
-html, body {
-  margin: 0;
-  height: 100%;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
+
+html, body{
+  margin:0;
+  height:100%;
+  overflow:hidden;
+  font-family:Arial,sans-serif;
+  background:#d9d9d9;
 }
 
-model-viewer {
-  width: 100vw;
-  height: 100vh;
-  background: #f5f5f5;
+model-viewer{
+  width:100vw;
+  height:100vh;
+
+  background:
+    radial-gradient(circle at center,
+    #f3f3f3 0%,
+    #d8d8d8 42%,
+    #bdbdbd 100%);
 }
 
-/* ===== Floating Control Panel ===== */
-.panel {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 260px;
-  max-height: 90vh;
-  overflow-y: auto;
+/* ===== Floating Panel ===== */
 
-  background: rgba(255,255,255,0.95);
-  padding: 16px;
-  border-radius: 14px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+.panel{
 
-  z-index: 30;
-  transition: all 0.25s ease;
+  position:fixed;
+
+  top:20px;
+  left:20px;
+
+  width:260px;
+  max-height:90vh;
+
+  overflow-y:auto;
+
+  background:rgba(255,255,255,0.94);
+
+  padding:16px;
+
+  border-radius:16px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.18);
+
+  z-index:30;
+
+  transition:all .25s ease;
 }
 
-.panel.collapsed {
-  width: 52px;
-  height: 52px;
-  padding: 0;
-  overflow: hidden;
+.panel.collapsed{
+  width:52px;
+  height:52px;
+  padding:0;
+  overflow:hidden;
 }
 
-.toggle-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
+.toggle-btn{
 
-  width: 36px;
-  height: 36px;
-
-  border: none;
-  border-radius: 10px;
-  background: #222;
-  color: white;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.panel.collapsed .panel-content {
-  display: none;
-}
-
-.panel button.action {
-  display: block;
-  width: 100%;
-  margin: 6px 0;
-  padding: 8px;
-  cursor: pointer;
-}
-
-.panel label {
-  display: block;
-  margin-top: 12px;
-  font-size: 12px;
-}
-
-.panel input[type="range"] {
-  width: 100%;
-}
-
- .company-info{
-  position: fixed;
-  bottom: 20px;
-  left: 28px;
-
-  font-size: 15px;
-  font-weight: bold;
-  background:#999;
-  color:green;
-  text-align: center;
-}
-
-
-}
-
-/* ===== Custom AR Button ===== */
-#custom-ar-btn{
   position:absolute;
-  bottom:16px;
-  right:16px;
 
-  padding:10px 16px;
+  top:8px;
+  right:8px;
+
+  width:36px;
+  height:36px;
+
   border:none;
-  border-radius:12px;
+  border-radius:10px;
 
-  background:rgba(30,30,30,0.78);
+  background:#222;
+  color:white;
+
+  cursor:pointer;
+
+  font-size:16px;
+}
+
+.panel.collapsed .panel-content{
+  display:none;
+}
+
+.panel button.action{
+
+  display:block;
+  width:100%;
+
+  margin:7px 0;
+  padding:10px;
+
+  border:none;
+  border-radius:10px;
+
+  background:#444;
+  color:white;
+
+  cursor:pointer;
+
+  transition:all .2s ease;
+}
+
+.panel button.action:hover{
+  background:#666;
+  transform:scale(1.02);
+}
+
+.panel label{
+
+  display:block;
+
+  margin-top:14px;
+
+  font-size:12px;
+  font-weight:bold;
+}
+
+.panel input[type="range"]{
+  width:100%;
+}
+
+/* ===== Company Info ===== */
+
+.company-info{
+
+  position:fixed;
+
+  bottom:22px;
+  left:28px;
+
+  padding:12px 18px;
+
+  border-radius:14px;
+
+  background:rgba(255,255,255,0.58);
+
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+
+  border:1px solid rgba(255,255,255,0.35);
+
+  font-size:14px;
+  font-weight:600;
+
+  line-height:1.5;
+
+  color:#222;
+
+  text-align:left;
+
+  box-shadow:
+    0 6px 24px rgba(0,0,0,0.12);
+
+  z-index:20;
+}
+
+/* ===== AR Button ===== */
+
+#custom-ar-btn{
+
+  position:absolute;
+
+  bottom:18px;
+  right:18px;
+
+  padding:12px 18px;
+
+  border:none;
+  border-radius:14px;
+
+  background:rgba(25,25,25,0.78);
+
   color:white;
 
   font-size:14px;
   font-weight:600;
 
   backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
 
-  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.22);
 
   cursor:pointer;
-  transition:all .2s ease; 
+
+  transition:all .2s ease;
 }
 
 #custom-ar-btn:hover{
-  background:rgba(60,60,60,0.9);
+
   transform:scale(1.05);
+
+  background:rgba(55,55,55,0.92);
 }
+
 </style>
 </head>
+
 <body>
 
+<!-- ===== Control Panel ===== -->
 
 <div class="panel collapsed" id="controlPanel">
+
   <button class="toggle-btn" onclick="togglePanel()">☰</button>
 
   <div class="panel-content">
 
-    <strong>Wood Texture</strong>
-    <button class="action" onclick="setWood('wood-light.jpg')">Light Wood</button>
-    <button class="action" onclick="setWood('wood-dark.jpg')">Dark Wood</button>
-    <button class="action" onclick="setWood('wood-red.jpg')">Red Wood</button>
+    <strong>Color Style</strong>
 
-    <strong>Tint</strong>
-    <button class="action" onclick="setTint(1,1,1)">Normal</button>
-    <button class="action" onclick="setTint(1,0.92,0.85)">Warm</button>
-    <button class="action" onclick="setTint(0.8,0.8,0.8)">Gray</button>
+    <button class="action" onclick="setTeslaGray()">
+      Tesla Gray
+    </button>
 
-    <label>Brightness <span id="brightnessValue">0.80</span></label>
-    <input type="range" id="brightnessSlider" min="0.3" max="2" step="0.05" value="0.8">
+    <button class="action" onclick="setSilver()">
+      Bright Silver
+    </button>
 
-    <label>Metallic <span id="metallicValue">0.00</span></label>
-    <input type="range" id="metallicSlider" min="0" max="1" step="0.01" value="0">
+    <button class="action" onclick="setMatteGray()">
+      Matte Gray
+    </button>
 
-    <label>Roughness <span id="roughnessValue">0.25</span></label>
-    <input type="range" id="roughnessSlider" min="0" max="1" step="0.01" value="0.25">
+    <button class="action" onclick="setDarkGray()">
+      Dark Metallic
+    </button>
+
+    <label>
+      Exposure
+      <span id="brightnessValue">1.35</span>
+    </label>
+
+    <input
+      type="range"
+      id="brightnessSlider"
+      min="0.5"
+      max="2.5"
+      step="0.05"
+      value="1.35">
+
+    <label>
+      Metallic
+      <span id="metallicValue">0.82</span>
+    </label>
+
+    <input
+      type="range"
+      id="metallicSlider"
+      min="0"
+      max="1"
+      step="0.01"
+      value="0.82">
+
+    <label>
+      Roughness
+      <span id="roughnessValue">0.24</span>
+    </label>
+
+    <input
+      type="range"
+      id="roughnessSlider"
+      min="0"
+      max="1"
+      step="0.01"
+      value="0.24">
 
   </div>
+
 </div>
 
+<!-- ===== Model Viewer ===== -->
+
 <model-viewer
+
   id="mv"
+
   src="Violin-v1.glb"
+
   poster="poster.webp"
 
   ar
   ar-modes="webxr scene-viewer quick-look"
+
   ar-scale="fixed"
   ar-placement="floor"
 
   camera-controls
+
   auto-rotate
   autoplay
-  rotation-per-second="15deg"
 
-/*  environment-image="https://modelviewer.dev/shared-assets/environments/spruit_sunrise_1k_HDR.hdr"
-  environment-image="industrial_workshop_foundry_4k.hdr"  */
-  
-  tone-mapping="neutral"
-  exposure="1"
-  shadow-intensity="1"
-  shadow-softness="0.6"
+  rotation-per-second="12deg"
+
+  environment-image="https://modelviewer.dev/shared-assets/environments/spruit_sunrise_1k_HDR.hdr"
+
+  tone-mapping="aces"
+
+  exposure="1.35"
+
+  shadow-intensity="0.55"
+  shadow-softness="0.9"
+
   camera-orbit="auto auto auto"
+
   field-of-view="auto">
+
+  <!-- ===== AR Button ===== -->
 
   <button slot="ar-button" id="custom-ar-btn">
     📱 AR 實境預覽
   </button>
-  
-<div class="company-info">
-  請徐先生 確認,謝謝! 5/25 <br>
-  Joesun Studio<br>
- 
-</div>
-  
+
 </model-viewer>
 
-/* <img src="logo.png" class="company-logo"> */
+<!-- ===== Original Company Info ===== -->
+
+<div class="company-info">
+
+  請徐先生 確認,謝謝! 5/25 <br>
+
+  Joesun Studio<br>
+
+</div>
 
 <script>
+
 const mv = document.querySelector("#mv");
 
-/* 初始材質設定 */
-/* mv.addEventListener("load", () => { */
-/*  mv.model.materials.forEach(mat => { */
-/*    mat.pbrMetallicRoughness.setBaseColorFactor([1,0.82,0.15,0.3]) */
-/*  }); */
-/* }); */
-
-/* Panel Toggle */
-function togglePanel() {
-  document.querySelector("#controlPanel").classList.toggle("collapsed");
-}
-
-/* Texture Switch */
-async function setWood(textureUrl) {
-  const tex = await mv.createTexture(textureUrl);
-
-  mv.model.materials.forEach(mat => {
-    if (mat.pbrMetallicRoughness.baseColorTexture) {
-      mat.pbrMetallicRoughness.baseColorTexture.setTexture(tex);
-    }
-  });
-}
-
-/* Tint */
-function setTint(r,g,b) {
-  mv.model.materials.forEach(mat => {
-    mat.pbrMetallicRoughness.setBaseColorFactor([r,g,b,1]);
-  });
-}
-
-/* Utility */
-function updateAllMaterials(callback){
-  mv.model.materials.forEach(mat => callback(mat.pbrMetallicRoughness));
-}
-
-/* Sliders */
-brightnessSlider.addEventListener("input", e => {
-  mv.exposure = e.target.value;
-  brightnessValue.textContent = Number(e.target.value).toFixed(2);
-});
-
-metallicSlider.addEventListener("input", e => {
-  const val = Number(e.target.value);
-  updateAllMaterials(pbr => pbr.setMetallicFactor(val));
-  metallicValue.textContent = val.toFixed(2);
-});
-
-roughnessSlider.addEventListener("input", e => {
-  const val = Number(e.target.value);
-  updateAllMaterials(pbr => pbr.setRoughnessFactor(val));
-  roughnessValue.textContent = val.toFixed(2);
-});
+/* ===== Initial Tesla Gray ===== */
 
 mv.addEventListener("load", () => {
+
+  setTeslaGray();
+
+});
+
+/* ===== Panel Toggle ===== */
+
+function togglePanel(){
+
+  document
+    .querySelector("#controlPanel")
+    .classList.toggle("collapsed");
+}
+
+/* ===== Utility ===== */
+
+function updateMaterial(color, metallic, roughness){
 
   mv.model.materials.forEach(mat => {
 
     const pbr = mat.pbrMetallicRoughness;
 
-    // Tesla Stealth Gray
-    pbr.setBaseColorFactor([0.24,0.25,0.28,1]);
+    pbr.setBaseColorFactor(color);
 
-    // metallic
-    pbr.setMetallicFactor(0.85);
+    pbr.setMetallicFactor(metallic);
 
-    // smoother
-    pbr.setRoughnessFactor(0.32);
+    pbr.setRoughnessFactor(roughness);
 
   });
 
+  metallicSlider.value = metallic;
+  roughnessSlider.value = roughness;
+
+  metallicValue.textContent =
+    metallic.toFixed(2);
+
+  roughnessValue.textContent =
+    roughness.toFixed(2);
+}
+
+/* ===== Tesla Gray ===== */
+
+function setTeslaGray(){
+
+  updateMaterial(
+    [0.42,0.43,0.46,1],
+    0.82,
+    0.24
+  );
+}
+
+/* ===== Bright Silver ===== */
+
+function setSilver(){
+
+  updateMaterial(
+    [0.72,0.72,0.74,1],
+    0.92,
+    0.16
+  );
+}
+
+/* ===== Matte Gray ===== */
+
+function setMatteGray(){
+
+  updateMaterial(
+    [0.45,0.45,0.46,1],
+    0.35,
+    0.62
+  );
+}
+
+/* ===== Dark Metallic ===== */
+
+function setDarkGray(){
+
+  updateMaterial(
+    [0.22,0.23,0.25,1],
+    0.90,
+    0.28
+  );
+}
+
+/* ===== Exposure Slider ===== */
+
+brightnessSlider.addEventListener("input", e => {
+
+  const val = Number(e.target.value);
+
+  mv.exposure = val;
+
+  brightnessValue.textContent =
+    val.toFixed(2);
+
 });
+
+/* ===== Metallic Slider ===== */
+
+metallicSlider.addEventListener("input", e => {
+
+  const val = Number(e.target.value);
+
+  mv.model.materials.forEach(mat => {
+
+    mat.pbrMetallicRoughness
+      .setMetallicFactor(val);
+
+  });
+
+  metallicValue.textContent =
+    val.toFixed(2);
+
+});
+
+/* ===== Roughness Slider ===== */
+
+roughnessSlider.addEventListener("input", e => {
+
+  const val = Number(e.target.value);
+
+  mv.model.materials.forEach(mat => {
+
+    mat.pbrMetallicRoughness
+      .setRoughnessFactor(val);
+
+  });
+
+  roughnessValue.textContent =
+    val.toFixed(2);
+
+});
+
 </script>
 
 </body>
