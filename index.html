@@ -178,9 +178,9 @@ model-viewer {
   autoplay
   rotation-per-second="15deg"
 
-/*  environment-image="https://modelviewer.dev/shared-assets/environments/spruit_sunrise_1k_HDR.hdr" */
-/*  environment-image="industrial_workshop_foundry_4k.hdr"  */
-  environment-image="studio.hdr"
+/*  environment-image="https://modelviewer.dev/shared-assets/environments/spruit_sunrise_1k_HDR.hdr"
+  environment-image="industrial_workshop_foundry_4k.hdr"  */
+  
   tone-mapping="neutral"
   exposure="1"
   shadow-intensity="1"
@@ -256,6 +256,25 @@ roughnessSlider.addEventListener("input", e => {
   const val = Number(e.target.value);
   updateAllMaterials(pbr => pbr.setRoughnessFactor(val));
   roughnessValue.textContent = val.toFixed(2);
+});
+
+mv.addEventListener("load", () => {
+
+  mv.model.materials.forEach(mat => {
+
+    const pbr = mat.pbrMetallicRoughness;
+
+    // Tesla Stealth Gray
+    pbr.setBaseColorFactor([0.24,0.25,0.28,1]);
+
+    // metallic
+    pbr.setMetallicFactor(0.85);
+
+    // smoother
+    pbr.setRoughnessFactor(0.32);
+
+  });
+
 });
 </script>
 
